@@ -72,10 +72,9 @@ defmodule Bamboo.PhoenixMjml do
 
   defp compile_mjml(mjml) when is_binary(mjml) do
     uuid = UUID.uuid1
-    File.mkdir("tmp")
     path = "/tmp/#{uuid}"
     File.write!(path, mjml)
-    case System.cmd("mjml", ["-l", "skip", "-s", path]) do
+    case System.cmd("mjml", [path, "-s"]) do
       {html, 0} ->
         :ok = File.rm!(path)
         html
